@@ -30,4 +30,11 @@ public final class StudentController implements DefenderController
 		}
 		return actions;
 	}
+
+	public int boardState(Game game, long timeDue)
+	{
+		int mode=0;
+		return mode;
+	}
+
 }
