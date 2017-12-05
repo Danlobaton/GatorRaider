@@ -1,2 +1,3 @@
 *.class
+.xml
 .DS_Store
