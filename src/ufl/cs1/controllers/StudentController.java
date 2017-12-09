@@ -32,7 +32,7 @@ public final class StudentController implements DefenderController
 			int mode=0;
 			return mode;
 	}
-	
+
 	public int uniqueBehavior1(Game game, Defender defender, long timeDue)
 	{
 		int direction = 0;
@@ -139,12 +139,10 @@ public final class StudentController implements DefenderController
 		}
 		return direction;
 	}
-=======
+
 	public int boardState(Game game, long timeDue)
 	{
 		int mode=0;
 		return mode;
 	}
-
->>>>>>> 112d15b32cd8321bf7654a5de1e1b15880f1c5a6
 }
