@@ -31,6 +31,7 @@ public final class StudentController implements DefenderController
 
     public int uniqueBehavior1(Game game, Defender defender, long timeDue)
     {
+        // RED Ghost
         int direction = 0;
         int attackerX = game.getAttacker().getLocation().getX();
         int attackerY = game.getAttacker().getLocation().getY();
@@ -110,13 +111,11 @@ public final class StudentController implements DefenderController
         else {
           for(int pill=0; pill<game.getPowerPillList().size(); pill++) {
             int distance_to_pill = game.getAttacker().getLocation().getPathDistance(game.getPowerPillList().get(pill));
-            // System.out.println("distance_to_pill: " + pill + " -- " + distance_to_pill);
             if (distance_to_pill < DISTANCE_TO_PILL) {
               approach = false;
             }
           }
         }
-        // System.out.println("approach: " + approach);
         int nextDirection = defender.getNextDir(game.getAttacker().getLocation(), approach);
 
         // for (int l=0; l<game.getAttacker().getPossibleLocations(false).size(); l++) {
@@ -185,6 +184,11 @@ public final class StudentController implements DefenderController
   }
     public int uniqueBehavior4(Game game, Defender defender, long timeDue)
     {
+        // int nextDirection = 0;
+        // for (int pill=0; pill< game.getCurMaze().getPillNodes().size(); pill++) {
+        //
+        //   nextDirection = defender.getNextDir(game.getCurMaze().getPillNodes().get(pill), true);
+        // }
         int direction = 0;
         List<Integer> possibleDirs = defender.getPossibleDirs();
         if(possibleDirs.size() != 0)
@@ -195,7 +199,7 @@ public final class StudentController implements DefenderController
         {
             direction = -1;
         }
-        return direction;
+        return nextDirection;
     }
 
 }
