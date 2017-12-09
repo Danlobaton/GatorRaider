@@ -131,27 +131,53 @@ public final class StudentController implements DefenderController
       // ORANGE Ghost
 
       int ghost_distance_to_pill[] = new int[game.getPowerPillList().size()];
+      int attacker_distance_to_pill[] = new int[game.getPowerPillList().size()];
       int nextDirection = 0;
+      int MIN_DISTANCE = 50;
 
 
       for(int pill=0; pill<game.getPowerPillList().size(); pill++) {
         ghost_distance_to_pill[pill] = defender.getLocation().getPathDistance(game.getPowerPillList().get(pill));
+        attacker_distance_to_pill[pill] = game.getAttacker().getLocation().getPathDistance(game.getPowerPillList().get(pill));
       }
-
-      if (ghost_distance_to_pill[0] > ghost_distance_to_pill[1]) {
-        if (!defender.isVulnerable()) {
-          nextDirection = defender.getNextDir(game.getPowerPillList().get(1), true);
+      if (ghost_distance_to_pill.length > 1) {
+        if (ghost_distance_to_pill[0] > ghost_distance_to_pill[1]) {
+          if (!defender.isVulnerable()) {
+            nextDirection = defender.getNextDir(game.getPowerPillList().get(1), true);
+            if ((ghost_distance_to_pill[1] - attacker_distance_to_pill[1]) < MIN_DISTANCE) {
+              nextDirection = defender.getNextDir(game.getAttacker().getLocation(), true);
+            }
+          }
+          else {
+            nextDirection = defender.getNextDir(game.getAttacker().getLocation(), false);
+          }
         }
         else {
-          nextDirection = defender.getNextDir(game.getAttacker().getLocation(), false);
+          if (!defender.isVulnerable()) {
+            nextDirection = defender.getNextDir(game.getPowerPillList().get(0), true);
+            if ((ghost_distance_to_pill[1] - attacker_distance_to_pill[1]) < MIN_DISTANCE) {
+              nextDirection = defender.getNextDir(game.getAttacker().getLocation(), true);
+            }
+          }
+          else {
+            nextDirection = defender.getNextDir(game.getAttacker().getLocation(), false);
+          }
         }
       }
       else {
-        if (!defender.isVulnerable()) {
-          nextDirection = defender.getNextDir(game.getPowerPillList().get(0), true);
+        if (ghost_distance_to_pill.length != 0) {
+          if (!defender.isVulnerable()) {
+            nextDirection = defender.getNextDir(game.getPowerPillList().get(0), true);
+            if ((ghost_distance_to_pill[0] - attacker_distance_to_pill[0]) < MIN_DISTANCE) {
+              nextDirection = defender.getNextDir(game.getAttacker().getLocation(), true);
+            }
+          }
+          else {
+            nextDirection = defender.getNextDir(game.getAttacker().getLocation(), false);
+          }
         }
         else {
-          nextDirection = defender.getNextDir(game.getAttacker().getLocation(), false);
+          nextDirection = defender.getNextDir(game.getAttacker().getLocation(), true);
         }
       }
 
