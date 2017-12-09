@@ -111,20 +111,95 @@ public final class StudentController implements DefenderController
 		}
 		return direction;
 	}
-	public int uniqueBehavior3(Game game, Defender defender, long timeDue)
-	{
-		int direction = 0;
-		List<Integer> possibleDirs = defender.getPossibleDirs();
-		if(possibleDirs.size() != 0)
-		{
-			direction = possibleDirs.get(Game.rng.nextInt(possibleDirs.size()));
-		}
-		else
-		{
-			direction = -1;
-		}
-		return direction;
-	}
+	public int uniqueBehavior3(Game game, Node node, Defender defender, long timeDue) {  //Xavier's
+        int direction = 0;
+        int numPwrPills = game.getCurMaze().getNumberPowerPills();
+        int[] xRay = new int[numPwrPills];
+        int[] yRay = new int[numPwrPills];
+        int defenderX = defender.getLocation().getX();
+        int defenderY = defender.getLocation().getY();
+        int differenceYA = Math.abs(yRay[0] - defenderY);
+        int differenceXA = Math.abs(xRay[0] - defenderX);
+        int differenceYB = Math.abs(yRay[1] - defenderY);
+        int differenceXB = Math.abs(xRay[1] - defenderX);
+        int dist1 = node.getPathDistance(game.getPowerPillList().get(0));
+        int dist2 = node.getPathDistance(game.getPowerPillList().get(1));
+
+        for (int i = 0; i < numPwrPills; i++)
+        //fill X and y co-ords separately
+        {
+            xRay[i] = game.getPowerPillList().get(i).getX();
+            yRay[i] = game.getPowerPillList().get(i).getY();
+        }
+        //(104,108) (4,108) (4,8) (104,8)
+
+
+        if (numPwrPills == 2) {
+            if (dist1 >= dist2) {
+                if (!defender.isVulnerable()) {
+                    if (differenceYB > differenceXB) {
+                        if (yRay[1] > defenderY) {
+                            direction = 2;
+                        } else if (yRay[1] < defenderY) {
+                            direction = 0;
+                        }
+                    } else if (differenceYB < differenceXB) {
+                        if (xRay[1] > defenderX) {
+                            direction = 1;
+                        } else if (xRay[1] < defenderX) {
+                            direction = 3;
+                        }
+                    }
+                } else if (defender.isVulnerable()) {
+                    if (differenceYB > differenceXB) {
+                        if (yRay[1] > defenderY) {
+                            direction = 0;
+                        } else if (yRay[1] < defenderY) {
+                            direction = 2;
+                        }
+                    } else if (differenceYB < differenceXB) {
+                        if (xRay[1] > defenderX) {
+                            direction = 3;
+                        } else if (xRay[1] < defenderX) {
+                            direction = 1;
+                        }
+                    }
+                }
+
+            } else {
+                if (!defender.isVulnerable()) {
+                    if (differenceYA > differenceXA) {
+                        if (yRay[0] > defenderY) {
+                            direction = 2;
+                        } else if (yRay[0] < defenderY) {
+                            direction = 0;
+                        }
+                    } else if (differenceYA < differenceXA) {
+                        if (xRay[0] > defenderX) {
+                            direction = 1;
+                        } else if (xRay[0] < defenderX) {
+                            direction = 3;
+                        }
+                    }
+                } else if (defender.isVulnerable()) {
+                    if (differenceYA > differenceXA) {
+                        if (yRay[0] > defenderY) {
+                            direction = 0;
+                        } else if (yRay[0] < defenderY) {
+                            direction = 2;
+                        }
+                    } else if (differenceYA < differenceXA) {
+                        if (xRay[0] > defenderX) {
+                            direction = 3;
+                        } else if (xRay[0] < defenderX) {
+                            direction = 1;
+                        }
+                    }
+                }
+            }
+        }
+        return direction;
+    }
 	public int uniqueBehavior4(Game game, Defender defender, long timeDue)
 	{
 		int direction = 0;
