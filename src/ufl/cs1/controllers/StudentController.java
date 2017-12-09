@@ -199,7 +199,7 @@ public final class StudentController implements DefenderController
         {
             direction = -1;
         }
-        return nextDirection;
+        return direction;
     }
 
 }
