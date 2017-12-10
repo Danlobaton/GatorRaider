@@ -23,12 +23,6 @@ public final class StudentController implements DefenderController
         return actions;
     }
 
-    public int boardState(Game game, long timeDue)
-    {
-        int mode=0;
-        return mode;
-    }
-
     public int uniqueBehavior1(Game game, Defender defender, long timeDue)
     {
         // RED Ghost
@@ -98,6 +92,7 @@ public final class StudentController implements DefenderController
     {
         // PINK Ghost
         boolean approach = true;
+        int nextDirection = 0;
         int VULNERABLE_TIME_LIMIT= 40;
         int DISTANCE_TO_PILL = 40;
 
@@ -109,23 +104,31 @@ public final class StudentController implements DefenderController
           }
         }
         else {
+          // System.out.println("pink: " + defender.getLocation().getX() + ":" + defender.getLocation().getY() + " / pacman: " + game.getAttacker().getLocation().getX() + ":" + game.getAttacker().getLocation().getY());
+          int pacman_x = game.getAttacker().getLocation().getX();
+          int pacman_y = game.getAttacker().getLocation().getY();
+          int ghost_x = defender.getLocation().getX();
+          int ghost_y = defender.getLocation().getY();
+          int difference_y = Math.abs(ghost_y - pacman_y);
+          int difference_x = ghost_x - pacman_x;
+
+          if (difference_x < 15 && difference_y < 15) {
+            nextDirection = game.getAttacker().getReverse();
+            return nextDirection;
+          }
+
+          int[] distance_to_pill = new int[game.getPowerPillList().size()];
           for(int pill=0; pill<game.getPowerPillList().size(); pill++) {
-            int distance_to_pill = game.getAttacker().getLocation().getPathDistance(game.getPowerPillList().get(pill));
-            if (distance_to_pill < DISTANCE_TO_PILL) {
+            distance_to_pill[pill] = game.getAttacker().getLocation().getPathDistance(game.getPowerPillList().get(pill));
+            if (distance_to_pill[pill] < DISTANCE_TO_PILL) {
               approach = false;
             }
           }
         }
-        int nextDirection = defender.getNextDir(game.getAttacker().getLocation(), approach);
-
-        // for (int l=0; l<game.getAttacker().getPossibleLocations(false).size(); l++) {
-        //   if (game.getAttacker().getPossibleLocations(false).get(l) != null)
-        //   System.out.println(">>> " + l + ": " + game.getAttacker().getPossibleLocations(false).get(l).getX() + ":" + game.getAttacker().getPossibleLocations(false).get(l).getY());
-        // }
-        // return game.getAttacker().getPossibleDirs(false).get(0);
+        nextDirection = defender.getNextDir(game.getAttacker().getLocation(), approach);
         return nextDirection;
     }
-    public int uniqueBehavior3(Game game, Defender defender, long timeDue) {  //Xavier's
+    public int uniqueBehavior3(Game game, Defender defender, long timeDue) {
 
       // ORANGE Ghost
 
@@ -184,11 +187,7 @@ public final class StudentController implements DefenderController
   }
     public int uniqueBehavior4(Game game, Defender defender, long timeDue)
     {
-        // int nextDirection = 0;
-        // for (int pill=0; pill< game.getCurMaze().getPillNodes().size(); pill++) {
-        //
-        //   nextDirection = defender.getNextDir(game.getCurMaze().getPillNodes().get(pill), true);
-        // }
+        // SEA BLUE GREEN Ghost
         int direction = 0;
         List<Integer> possibleDirs = defender.getPossibleDirs();
         if(possibleDirs.size() != 0)
@@ -201,5 +200,6 @@ public final class StudentController implements DefenderController
         }
         return direction;
     }
+
 
 }
