@@ -212,7 +212,6 @@ public final class StudentController implements DefenderController
           int difference_distance_from_the_pill = (attacker_distance_to_pill[pill] - ghost_distance_to_pill[pill]);
 
           if (attacker_distance_to_pill[pill] < 10) {
-            // System.out.println("pacMan CLOSE TO A PILL");
             approach = false;
             direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
             return direction;
@@ -232,7 +231,7 @@ public final class StudentController implements DefenderController
             }
             else {
               approach = true;
-              direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
+              direction = defender.getNextDir(game.getPowerPillList().get(0), true);
               return direction;
             }
           }
