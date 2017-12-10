@@ -186,31 +186,25 @@ public final class StudentController implements DefenderController
 
       return nextDirection;
   }
-    public int uniqueBehavior4(Game game, Defender defender, long timeDue)
-    {
-        // SEA BLUE GREEN Ghost
-        int direction = 0;
-        boolean approach = true;
+	public int uniqueBehavior4(Game game, Defender defender, long timeDue)
+	{
+		// SEA BLUE GREEN Ghost
+		int direction = 0;
+		boolean approach = true;
 
-        List<Integer> possibleDirs = defender.getPossibleDirs();
-
-
+		List<Integer> possibleDirs = defender.getPossibleDirs();
 		if (defender.isVulnerable()) {
-
 			approach = false;
 			direction = defender.getNextDir( game.getAttacker().getLocation(), approach);
 		}
-        else if (!defender.isVulnerable()) {
-
+		else if (!defender.isVulnerable()) {
 			if (possibleDirs.size() != 0) {
-
 				int currentDir = game.getAttacker().getDirection();
 				direction = defender.getNextDir(game.getAttacker().getLocation().getNeighbor(currentDir), approach);
-
 			}
 		}
-        return direction;
-    }
+		return direction;
+	}
 
 
 }
