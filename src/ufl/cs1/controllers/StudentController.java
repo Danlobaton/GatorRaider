@@ -195,20 +195,20 @@ public final class StudentController implements DefenderController
         List<Integer> possibleDirs = defender.getPossibleDirs();
 
 
-		if (defender.isVulnerable()) {
-
+		if (defender.isVulnerable())
+		{
 			approach = false;
 			direction = defender.getNextDir( game.getAttacker().getLocation(), approach);
 		}
         else if (!defender.isVulnerable()) {
 
 			if (possibleDirs.size() != 0) {
-
 				int currentDir = game.getAttacker().getDirection();
-				direction = defender.getNextDir(game.getAttacker().getLocation().getNeighbor(currentDir), approach);
+				direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
 
 			}
 		}
+
         return direction;
     }
 

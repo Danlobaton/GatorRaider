@@ -31,13 +31,13 @@ public class Exec
 		if (args.length > 0)
 		{
 			if (args[0].toLowerCase().equals("-debugexample"))
-				exec.runExperiment(attacker, exampleDefender, 10, true);
+				exec.runExperiment(attacker, exampleDefender, 100, true);
 			else if (args[0].toLowerCase().equals("-debugstudent"))
-				exec.runExperiment(attacker, studentDefender, 10, true);
+				exec.runExperiment(attacker, studentDefender, 100, true);
 			else if (args[0].toLowerCase().equals("-testexample"))
-				exec.runExperiment(attacker, exampleDefender, 10, false);
+				exec.runExperiment(attacker, exampleDefender, 100, false);
 			else if (args[0].toLowerCase().equals("-teststudent"))
-				exec.runExperiment(attacker, studentDefender, 10, false);
+				exec.runExperiment(attacker, studentDefender, 100, false);
 			else if (args[0].toLowerCase().equals("-visualexample"))
 				exec.runGame(attacker, exampleDefender, true, _Game.DELAY);
 			else
