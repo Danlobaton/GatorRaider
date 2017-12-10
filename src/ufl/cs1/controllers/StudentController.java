@@ -1,7 +1,6 @@
 package ufl.cs1.controllers;
 
 import game.controllers.DefenderController;
-import game.models.Attacker;
 import game.models.Defender;
 import game.models.Game;
 
@@ -186,25 +185,63 @@ public final class StudentController implements DefenderController
 
       return nextDirection;
   }
-	public int uniqueBehavior4(Game game, Defender defender, long timeDue)
-	{
-		// SEA BLUE GREEN Ghost
-		int direction = 0;
-		boolean approach = true;
+  public int uniqueBehavior4(Game game, Defender defender, long timeDue)
+  {
+    // SEA BLUE GREEN Ghost
+    int direction = 0;
+    boolean approach = true;
 
-		List<Integer> possibleDirs = defender.getPossibleDirs();
-		if (defender.isVulnerable()) {
-			approach = false;
-			direction = defender.getNextDir( game.getAttacker().getLocation(), approach);
-		}
-		else if (!defender.isVulnerable()) {
-			if (possibleDirs.size() != 0) {
-				int currentDir = game.getAttacker().getDirection();
-				direction = defender.getNextDir(game.getAttacker().getLocation().getNeighbor(currentDir), approach);
-			}
-		}
-		return direction;
-	}
+    List<Integer> possibleDirs = defender.getPossibleDirs();
+
+    if (defender.isVulnerable()) {
+      approach = false;
+      direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
+    }
+    else if (!defender.isVulnerable()) {
+      if (possibleDirs.size() != 0) {
+        // int currentDir = game.getAttacker().getDirection();
+        // direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
+
+        int attacker_distance_to_pill[] = new int[game.getPowerPillList().size()];
+        int ghost_distance_to_pill[] = new int[game.getPowerPillList().size()];
+
+        for(int pill=0; pill<game.getPowerPillList().size(); pill++) {
+          ghost_distance_to_pill[pill] = defender.getLocation().getPathDistance(game.getPowerPillList().get(pill));
+          attacker_distance_to_pill[pill] = game.getAttacker().getLocation().getPathDistance(game.getPowerPillList().get(pill));
+
+          int difference_distance_from_the_pill = (attacker_distance_to_pill[pill] - ghost_distance_to_pill[pill]);
+
+          if (attacker_distance_to_pill[pill] < 10) {
+            // System.out.println("pacMan CLOSE TO A PILL");
+            approach = false;
+            direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
+            return direction;
+          }
+          else {
+
+            int pacman_x = game.getAttacker().getLocation().getX();
+            int pacman_y = game.getAttacker().getLocation().getY();
+            int ghost_x = defender.getLocation().getX();
+            int ghost_y = defender.getLocation().getY();
+            int difference_y = Math.abs(ghost_y - pacman_y);
+            int difference_x = ghost_x - pacman_x;
+
+            if (difference_x < 15 && difference_y < 15) {
+              direction = game.getAttacker().getReverse();
+              return direction;
+            }
+            else {
+              approach = true;
+              direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
+              return direction;
+            }
+          }
+        }
+
+      }
+    }
+    return direction;
+  }
 
 
 }
