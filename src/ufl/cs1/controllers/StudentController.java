@@ -1,6 +1,7 @@
 package ufl.cs1.controllers;
 
 import game.controllers.DefenderController;
+import game.models.Attacker;
 import game.models.Defender;
 import game.models.Game;
 
@@ -189,15 +190,25 @@ public final class StudentController implements DefenderController
     {
         // SEA BLUE GREEN Ghost
         int direction = 0;
+        boolean approach = true;
+
         List<Integer> possibleDirs = defender.getPossibleDirs();
-        if(possibleDirs.size() != 0)
-        {
-            direction = possibleDirs.get(Game.rng.nextInt(possibleDirs.size()));
-        }
-        else
-        {
-            direction = -1;
-        }
+
+
+		if (defender.isVulnerable()) {
+
+			approach = false;
+			direction = defender.getNextDir( game.getAttacker().getLocation(), approach);
+		}
+        else if (!defender.isVulnerable()) {
+
+			if (possibleDirs.size() != 0) {
+
+				int currentDir = game.getAttacker().getDirection();
+				direction = defender.getNextDir(game.getAttacker().getLocation().getNeighbor(currentDir), approach);
+
+			}
+		}
         return direction;
     }
 
