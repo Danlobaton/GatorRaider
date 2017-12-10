@@ -199,7 +199,6 @@ public final class StudentController implements DefenderController
     }
     else if (!defender.isVulnerable()) {
       if (possibleDirs.size() != 0) {
-         int currentDir = game.getAttacker().getDirection();
          direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
 
         int attacker_distance_to_pill[] = new int[game.getPowerPillList().size()];
@@ -208,8 +207,6 @@ public final class StudentController implements DefenderController
         for(int pill=0; pill<game.getPowerPillList().size(); pill++) {
           ghost_distance_to_pill[pill] = defender.getLocation().getPathDistance(game.getPowerPillList().get(pill));
           attacker_distance_to_pill[pill] = game.getAttacker().getLocation().getPathDistance(game.getPowerPillList().get(pill));
-
-          int difference_distance_from_the_pill = (attacker_distance_to_pill[pill] - ghost_distance_to_pill[pill]);
 
           if (attacker_distance_to_pill[pill] < 10) {
             // System.out.println("pacMan CLOSE TO A PILL");
