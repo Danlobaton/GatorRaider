@@ -199,8 +199,8 @@ public final class StudentController implements DefenderController
     }
     else if (!defender.isVulnerable()) {
       if (possibleDirs.size() != 0) {
-        // int currentDir = game.getAttacker().getDirection();
-        // direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
+         int currentDir = game.getAttacker().getDirection();
+         direction = defender.getNextDir(game.getAttacker().getLocation(), approach);
 
         int attacker_distance_to_pill[] = new int[game.getPowerPillList().size()];
         int ghost_distance_to_pill[] = new int[game.getPowerPillList().size()];
