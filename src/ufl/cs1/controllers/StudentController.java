@@ -95,6 +95,7 @@ public final class StudentController implements DefenderController
         int nextDirection = 0;
         int VULNERABLE_TIME_LIMIT= 40;
         int DISTANCE_TO_PILL = 40;
+        int CLOSE_DIFFERENCE = 15;
 
         if (defender.isVulnerable()) {
           approach = false;
@@ -112,7 +113,7 @@ public final class StudentController implements DefenderController
           int difference_y = Math.abs(ghost_y - pacman_y);
           int difference_x = ghost_x - pacman_x;
 
-          if (difference_x < 15 && difference_y < 15) {
+          if (difference_x < CLOSE_DIFFERENCE && difference_y < CLOSE_DIFFERENCE) {
             nextDirection = game.getAttacker().getReverse();
             return nextDirection;
           }
